@@ -2,7 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import {TooltipPosition} from '@angular/material/tooltip';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
-import { User } from '../models/user.class';
+import { User } from '../../models/user.class';
 import { CollectionReference, DocumentData, Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
@@ -23,12 +23,11 @@ export class UserComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.users$ = collectionData(this.coll);
+    this.users$ = collectionData(this.coll, { idField: 'id' });
 
     //To subscribe the updates -> every time something in users changes this function is called
     this.users$.subscribe( (changes) =>  {  
       this.allUsers = changes;
-      console.log(this.allUsers);
     });
   }
 

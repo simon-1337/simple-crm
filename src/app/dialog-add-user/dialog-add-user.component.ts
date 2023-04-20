@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { User } from '../models/user.class';
+import { User } from '../../models/user.class';
 import { CollectionReference, DocumentData, Firestore, addDoc, collection } from '@angular/fire/firestore';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -23,10 +23,8 @@ export class DialogAddUserComponent {
   saveUser() {
     this.user.birthDate = this.birthDate.getTime();
     this.loading = true;
-
     addDoc(this.coll, this.user.toJSON()).then( (userInfo: any) => {
       this.loading = false;
-      console.log(userInfo);
       this.dialogRef.close();
     });
   }
