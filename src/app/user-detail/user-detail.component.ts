@@ -3,6 +3,9 @@ import { CollectionReference, DocumentData, Firestore, collection, doc, docData 
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user.class';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogEditAdressComponent } from '../dialog-edit-adress/dialog-edit-adress.component';
+import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
 
 @Component({
   selector: 'app-user-detail',
@@ -11,20 +14,19 @@ import { User } from '../../models/user.class';
 })
 export class UserDetailComponent implements OnInit {
 
-  user: User = new User();
+  user: any = new User();
   userId = '';
   private coll: CollectionReference<DocumentData>;
   docRef: any;
   user$: Observable<any>;
 
-  constructor(private route: ActivatedRoute, private firestore: Firestore) {
+  constructor(private route: ActivatedRoute, private firestore: Firestore, public dialog: MatDialog) {
     this.coll = collection(this.firestore, 'users');
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {
       this.userId = paramMap.get('id').trim();
-      console.log(this.userId);
       this.getUser()
     });
 
@@ -39,7 +41,12 @@ export class UserDetailComponent implements OnInit {
     });
   }
 
-  editMenu() {
+  editUserAddress() {
+    const dialog = this.dialog.open(DialogEditAdressComponent);
+    dialog.componentInstance.user = this.user;
+  }
 
+  editUserDetail() {
+    this.dialog.open(DialogEditUserComponent);
   }
 }
