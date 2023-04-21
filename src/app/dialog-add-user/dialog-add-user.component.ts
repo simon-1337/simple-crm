@@ -23,7 +23,7 @@ export class DialogAddUserComponent {
   saveUser() {
     this.user.birthDate = this.birthDate.getTime();
     this.loading = true;
-    addDoc(this.coll, this.user.toJSON()).then( (userInfo: any) => {
+    addDoc(this.coll, this.user.toJSON()).then( () => {
       this.loading = false;
       this.dialogRef.close();
     });

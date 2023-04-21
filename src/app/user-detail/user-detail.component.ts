@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CollectionReference, DocumentData, Firestore, collection, doc, docData } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { User } from '../../models/user.class';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditAdressComponent } from '../dialog-edit-adress/dialog-edit-adress.component';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
+import { User } from 'src/models/user.class';
 
 @Component({
   selector: 'app-user-detail',
@@ -14,7 +14,7 @@ import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.co
 })
 export class UserDetailComponent implements OnInit {
 
-  user: any = new User();
+  user: User = new User;
   userId = '';
   private coll: CollectionReference<DocumentData>;
   docRef: any;
@@ -43,10 +43,15 @@ export class UserDetailComponent implements OnInit {
 
   editUserAddress() {
     const dialog = this.dialog.open(DialogEditAdressComponent);
-    dialog.componentInstance.user = this.user;
+    //forward the variable userId and the Object user to the dialog component 
+    dialog.componentInstance.user = new User(this.user.toJSON()); //copy of our user
+    dialog.componentInstance.userId = this.userId;
   }
 
   editUserDetail() {
-    this.dialog.open(DialogEditUserComponent);
+    const dialog = this.dialog.open(DialogEditUserComponent);
+    //forward the variable userId and the Object user to the dialog component
+    dialog.componentInstance.user = new User(this.user.toJSON()); //copy of our user
+    dialog.componentInstance.userId = this.userId;
   }
 }
